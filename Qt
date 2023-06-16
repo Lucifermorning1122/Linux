@@ -1,0 +1,173 @@
+Cell.qml:
+import QtQuick 2.0
+Item {
+id: container
+property alias cellColor: rectangle.color
+signal clicked(color cellColor)
+
+width: 40; height: 25
+
+Rectangle {
+id: rectangle
+border.color: "white"
+
+Bannari Amman Institute of Technology. All rights Reserved
+
+WSS Source Book – Qt QML – A Cross Platform Application Development Framework
+anchors.fill: parent
+}
+
+MouseArea {
+anchors.fill: parent
+onClicked: container.clicked(container.cellColor)
+}
+}
+
+In order to change the color of the text when clicking on a cell, we create a MouseArea type with the
+same size as its parent. A MouseArea defines a signal called clicked. When this signal is triggered we
+want to emit our own clicked signal with the color as parameter.
+
+To create different button using components in Qml
+Main.qml
+import QtQuick 2.12
+import QtQuick.Window 2.12
+Window {
+width: 440
+height: 680
+visible: true
+title: qsTr("My Components")
+Column{
+id:c1
+
+Bannari Amman Institute of Technology. All rights Reserved
+
+WSS Source Book – Qt QML – A Cross Platform Application Development Framework
+//width:parent.width
+anchors.centerIn: parent
+height: 400
+spacing: 15
+Row{
+id:row1
+spacing: 15
+MyButtons{
+id:btn1
+value:"Admin"
+}
+MyButtons{
+id:btn2
+value:"About"
+}
+}
+Row{
+id:row2
+spacing: 15
+MyButtons{
+id:btn3
+value:"Registeration"
+
+Bannari Amman Institute of Technology. All rights Reserved
+
+WSS Source Book – Qt QML – A Cross Platform Application Development Framework
+}
+MyButtons{
+id:btn4
+value:"Login"
+}
+}
+Row{
+id:row3
+spacing: 15
+MyButtons{
+id:btn5
+value:"Depts"
+}
+MyButtons{
+id:btn6
+value:"Faculty"
+}
+MyRegistration{
+id:regis
+visible: false
+}
+}
+}
+Connections{
+
+Bannari Amman Institute of Technology. All rights Reserved
+
+WSS Source Book – Qt QML – A Cross Platform Application Development Framework
+target:btn1
+onMyClick: {
+console.log("Admin Button is Clicked="+btn1.value)
+}
+}
+Connections{
+target:btn2
+onMyClick: {
+console.log("About Button is Clicked="+btn2.value)
+}
+}
+Connections{
+target:btn3
+onMyClick: {
+console.log("Registeration Button is Clicked="+btn3.value)
+regis.visible=true
+}
+}
+Connections{
+target:btn4
+onMyClick: {
+console.log("Login Button is Clicked="+btn4.value)
+}
+}
+
+Bannari Amman Institute of Technology. All rights Reserved
+
+WSS Source Book – Qt QML – A Cross Platform Application Development Framework
+Connections{
+target:btn5
+onMyClick: {
+console.log("Depts Button is Clicked="+btn5.value)
+}
+}
+Connections{
+target:btn6
+onMyClick: {
+console.log("Faculty Button is Clicked="+btn6.value)
+}
+}
+}
+
+Mybutton.qml
+import QtQuick 2.0
+Rectangle{
+id:r1
+color:"light blue"
+width: 150
+height: 150
+radius: 20
+property string value
+
+Bannari Amman Institute of Technology. All rights Reserved
+
+WSS Source Book – Qt QML – A Cross Platform Application Development Framework
+signal myClick(string value)
+Text{
+id:t1
+text:r1.value
+font.pixelSize: 25
+anchors.centerIn: parent
+}
+MouseArea{
+id:ms
+anchors.fill:parent
+onClicked:{
+r1.myClick(t1.text)
+}
+}
+// Connections{
+// target:ms
+
+// }
+
+}
